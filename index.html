@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Àrea de lazer </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=menu" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="nav_itens">
+            <img src="Fotos/logo_area.png" alt="">
+            <ul class="ul_itens">
+               <a href="#acomodação">
+                  <li>Acomodação</li>
+               </a>  
+               
+               <a href="#espaço">
+                  <li>Nosso Espaço</li>
+               </a>
+
+                <a href="#orçamento"> 
+                    <li>Orçamentos</li>
+                </a>
+                <a href="#agendamento">
+                    <li>Agendamento</li>
+                </a>
+            </ul>
+            <span id="burguer" class="material-symbols-outlined">menu</span>
+        </nav>
+    </header>
+
+    <main>
+
+        <!--Html  espaço da area-->
+      <section id="espaço" class="section_carrocel">
+        <button class="button_img" id="prev" onclick="moverSlide(-1)">⟨</button>
+        <div class="carrocel">
+            <img class="fotos_recanto"  src="Fotos/are_img(2).webp" alt="">
+            <img class="fotos_recanto"  src="Fotos/area_img.jpg" alt="">
+            <img class="fotos_recanto"  src="Fotos/img_area(03).jpeg" alt="">
+        </div>
+        <button class="button_img" id="next" onclick="moverSlide(1)">⟩</button>
+      </section>
+      <!--Fim Html do espaço da area-->
+
+
+        <!--Html acomodações-->
+        <section class="section_acomodação">
+
+            <div class="div_acomodações">
+                <p>Área de lazer dentro da cidade em São Carlos 
+                    Aluguel para festas de  confraternizações e festas familiares
+                    Área Gourmet coberta com: 
+                     Wi-fi
+                    -Churrasqueira 
+                    -Geladeira 
+                    -Fogão 
+                    -Mesa de jantar
+                    -Piscina grande com cascata e hidromassagem 
+                    2 banheiros ( feminino e masculino)
+                    </p>
+                <button class="button_acomodação">
+                    <a href="#">Agendar visita</a>
+                </button>
+                <button class="button_acomodação">
+                    <a href="#">Agendar evento</a>
+                </button>
+            </div>
+
+            <div class="div_img_acomodação">
+                <img class="imf_acomodação" src="Fotos/imagem_form_orçamento.jpg" alt="">
+            </div>
+
+        </section>
+     <!--Fim Html acomodações-->
+
+
+      <!--Html orçamento-->
+      <section id="orçamento" class="section_orçamento">
+        <div class="img_orçamento">
+            
+        </div>
+
+        <div class="div_orçamento">
+            <form method="post" id="form_orçamento" class="form_orçamento">
+                <h1>Solicite um orçamento</h1>
+                <label for="data">Data de inicio do evento:</label>
+                <input type="date" id="data" required>
+
+                <label for="data_fim">Data final do evento:</label>
+                <input type="date" id="data_fim" required>
+
+                <label for="qtd_pessoas">Quantidade de Pessoas:</label>
+                <input type="number" name="qtd_pessoas" id="qtd_pessoas" required min="5" max="30">
+
+                <div class="taxa_limpeza">
+                    <p id="taxa_limpeza"><strong>Taxa de Limpeza: R$150</strong></p>
+                </div>    
+
+                <button type="submit">Calcular Orçamento</button>
+            </form>
+        </div>
+      </section>
+        <!--Fim Html orçamento-->
+        
+
+        <!--html visita-->
+        <section class="section_visita">
+            <div class="img_visita">
+
+            </div>
+
+            <div class="div_visita">
+            <form id="form_visita" class="form_visita" action="" method="post">
+                <h1>Faça uma visita ao nosso recanto!</h1>
+                <p>Aqui você podera realizar uma visita ao nosso local.<br>Ficamos muitos felizes com a sua visita!</p>
+                <label for="data_visita">Data da visita:</label>
+                <input type="date" name="data_visita" id="data_visita" required placeholder="Escolha a data da sua visita!">
+
+                <button type="submit">Agendar</button>
+            </form>
+
+            <div class="success_message" id="success_message"></div>
+            <div class="error_message" id="error_message"></div>
+
+            <a id="btn_whatsapp" class="btn_whatsapp" target="_blank">Tirar dúvidas pelo WhatsApp</a>
+        </div>
+        </section>
+        <!--Fim html visita-->
+    </main>
+</body>
+</html>
+
+<script src="meuscript.js"></script>

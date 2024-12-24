@@ -1,0 +1,429 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    list-style-type: none;
+    text-decoration: none;
+}
+
+header{
+    background-color: white;
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid #FFB347;
+    padding: 0px 20px 0px 0px;
+    z-index: 10000;
+}
+.nav_itens{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav_itens img{
+    height: 140px;
+}
+.ul_itens{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.ul_itens li{
+    color: #005B96;
+    font-weight: 400;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: color 0.5s;
+}
+.ul_itens li:hover{
+    color: #1E73BE;
+    border-bottom: 3px solid #FFB347;
+}
+.nav_itens span{
+    display: none;
+}
+
+/*Media query nav-bar*/
+
+@media(max-width:768px){
+    .nav_itens{
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 12px 0px;
+        text-align: center;
+    }
+    .ul_itens{
+        display: none;
+    }
+    .ul_itens.active{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .nav_itens span{
+        display: block;
+        font-size: 2.5em;
+        cursor: pointer;
+        margin-right: 5%;
+        color: #FFB347;
+    }
+}
+
+
+/* Fim Media query nav-bar*/
+
+
+
+/*Estilos efeito carrocel*/
+    .section_carrocel{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        margin: auto;
+        border-bottom: 3px solid #FFB347;
+    }
+
+    .carrocel{
+      display: flex;
+      gap: 20px;
+      width: 100%;
+    }
+    .carrocel img{
+        width: 100%;
+        height: 500px;
+        flex-shrink: 0;
+    }
+
+    .button_img{
+        position: absolute;
+        transform: translateY(-50%);
+        background-color: #151515;
+        color:white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1.5em;
+        cursor: pointer;
+        z-index: 10;
+        transition: background 0.6s;
+    }
+
+    #prev{
+        left: 0.1%;
+    }
+    #next{
+        right: 0.1%;
+    }
+    .button_img:hover{
+        background-color: #15151589;
+    }
+
+/*Fim estilos carrocel 
+
+
+/*EStilos orçamento*/
+.section_orçamento {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.301);
+    overflow: hidden;
+    margin-top: 10%;
+}
+
+.img_orçamento {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('Fotos/imagem_form_orçamento.jpg'); 
+    background-size: cover;
+    background-position: center;
+    transform: translateZ(0);
+    will-change: transform;
+    z-index: -1;
+}
+
+.div_orçamento {
+    flex: 0 0 400px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    padding: 40px;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.form_orçamento h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffcc00;
+}
+
+
+
+.taxa_limpeza {
+    background-color: #ffcc00;
+    color: #333;
+    text-align: center;
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.form_orçamento label {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.form_orçamento input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    color: #333;
+    font-size: 1rem;
+}
+
+.form_orçamento input:focus {
+    outline: none;
+    border: 2px solid #ffcc00;
+    background-color: #fff;
+}
+
+.form_orçamento button {
+    background-color: #ffcc00;
+    color: #fff;
+    padding: 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.form_orçamento button:hover {
+    background-color: #ffb300;
+}
+
+
+/*Fim estilos orçamento*/
+
+
+/*EStilos acomodações*/
+    .section_acomodação{
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+        margin-top: 100px;
+        padding: 5%;
+    }
+
+    .div_acomodações{
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        margin-right: 5%;
+    }
+    .div_acomodações p{
+        color: #005B96;
+        font-size: 1.5em;
+        font-weight: 400;
+        margin-bottom: 40px;
+    }
+    .button_acomodação{
+        background-color: black;
+        height: 50px;
+        width: 200px;
+        margin: auto;
+        margin-bottom: 20px;
+        transition: background 0.5s;
+        border-radius: 10px;
+    }
+
+    .button_acomodação:hover{
+        background-color: #ffb300;
+        color: white;
+    }
+
+    .button_acomodação a{
+        color: white;
+    }
+    .div_img_acomodação{
+        width: 50%;
+        height: auto;
+    }
+    .div_img_acomodação img{
+        width: 100%;
+        height: 300px;
+        border-radius: 20px;
+    }
+    @media(max-width:768px){
+        .div_acomodações{
+            width: 100%;
+        }
+        .div_img_acomodação{
+            display: none;
+        }
+    }
+/*FIm estilos acomodações*/
+
+/*Estilos visita*/
+.img_visita{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('Fotos/imagem_form_orçamento.jpg'); 
+    background-size: cover;
+    background-position: center;
+    transform: translateZ(0);
+    will-change: transform;
+    z-index: -1;
+}
+ .section_visita{
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    margin-top: 200px;
+ }
+ .div_visita{
+    width: 30%;
+    margin: auto;
+    flex: 0 0 400px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    padding: 40px;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+ }
+
+ .form_visita{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+ }
+
+ .form_visita h1{
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffcc00;
+ }
+ .form_visita p{
+    padding: 0px 0px 40px 0px;
+    font-size: 1.2em;
+ }
+
+
+ .form_visita label {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.form_visita input {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    color: #333;
+    font-size: 1rem;
+}
+
+.form_visita input:focus {
+    outline: none;
+    border: 2px solid #ffcc00;
+    background-color: #fff;
+}
+
+.form_visita button {
+    background-color: #ffcc00;
+    color: #fff;
+    padding: 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 80%;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.form_visita button:hover {
+    background-color: #ffb300;
+}
+
+.success_message {
+    color: #28a745;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    padding: 15px;
+    border-radius: 5px;
+    display: none;
+    margin: 30px 0px 20px 0px;
+    font-size: 18px;
+  }
+
+  .error_message{
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 5px;
+    display: none;
+    margin: 30px 0px 20px 0px;
+    font-size: 18px;
+  }
+
+
+  .btn_whatsapp {
+    display: none;
+    background-color: #25d366;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .btn_whatsapp:hover {
+    background-color: #1ebe57;
+  }
+
+@media(max-width:768px){
+    .div_visita{
+        width: 100%;
+    }
+}
+@media(max-width:1024px){
+    .div_visita{
+        width: auto;
+    }
+}
+/*Fim estilos visita*/
