@@ -4,5 +4,9 @@
     "cors": "^2.8.5",
     "mercadopago": "^2.1.1",
     "mongoose": "^8.9.2"
+  },
+  "scripts": {
+    "start": "node agendamento.js"
   }
+  
 }
