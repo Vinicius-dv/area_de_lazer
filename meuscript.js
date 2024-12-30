@@ -254,7 +254,7 @@ form_pagamento.addEventListener('submit',(e)=>{
     })  
 
     const form_mercado_pago = document.getElementById('form_mercado_pago')
-    /*const btn_pagar = document.getElementById('btn_pagar')*/
+    const btn_pagar = document.getElementById('btn_pagar')
     const email_pagamento = document.getElementById('email_pagamento')
     const valor_total = valorTotal
 

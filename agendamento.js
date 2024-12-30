@@ -2,9 +2,15 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const body_parser = require('body-parser')
-const axios = require('axios')
-const mercado_Pago  = require('mercadopago')
-mercado_Pago.configurations.setAccessToken('TEST-4480189822839140-122917-65a091edb91d3062baae90a4bf6b2e37-225293277')
+/*const axios = require('axios')*/
+
+const { MercadoPagoConfig, Payment } = require('mercadopago')
+const client = new MercadoPagoConfig({
+  accessToken: 'TEST-4480189822839140-122917-65a091edb91d3062baae90a4bf6b2e37-225293277',
+  options: { timeout: 5000, idempotencyKey: 'abc' },
+})
+const payment = new Payment(client)
+
 const app = express()
 
 app.use(cors())
@@ -123,17 +129,33 @@ app.post('/agendamento_pagamento',(req,res)=>{
     })
 })
 
-app.post('criar_pagamento',(req,res)=>{
+app.post('/criar_pagamento',(req,res)=>{
     const {total,data_inicio,data_fim,email_pagamento} = req.body
     const total_pagamento = total/2
+
     const pagamento = {
         transaction_amount:total_pagamento,
         description:`Aluguel de ${data_inicio} até ${data_fim}`,
         payer:{
             email: email_pagamento
         },
-
+        notification_url:'https://seu_site.com/notificações',
+        back_urls:{
+            success:'https://seu_site.com/pagamento',
+            failure:'https://seu_site.com/erro',
+            pending:'https://seu_site.com/pendente'
+        }
     }
+
+    payment.create({body: pagamento})
+    .then(res=>{
+        console.log(res)
+        res.status(200).json(res)
+        res.status(500).json({ message: 'Erro ao criar pagamento' })
+    })
+    .catch(error=>{
+        console.log(error)
+    })
 })
 
 
