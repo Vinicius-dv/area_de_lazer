@@ -29,6 +29,12 @@ const pagamento_Schema = new mongoose.Schema({
 
 const pagamento = mongoose.model('Pagamento',pagamento_Schema)
 
+
+
+app.get('/',(req,res)=>{
+    console.log('Olá')
+})
+
 app.post('/agendamento',(req,res)=>{
     const {data} = req.body
 
@@ -126,7 +132,7 @@ app.post('criar_pagamento',(req,res)=>{
         payer:{
             email: email_pagamento
         },
-        
+
     }
 })
 
