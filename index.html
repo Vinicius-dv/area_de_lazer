@@ -129,8 +129,50 @@
         </div>
         </section>
         <!--Fim html visita-->
+
+
+        <!--html pagamentos-->
+        <section class="section_pagamento">
+            <div class="img_pagamento">
+
+            </div>
+
+            <div class="div_pagamento">
+            <form id="form_pagamento" class="form_pagamento" action="" method="post">
+                <h1>Realize um evento em nosso recanto!</h1>
+                <p>Aqui você podera realizar um Evento em nosso local.<br>Ficamos muitos felizes com sua presença!</p>
+                <label for="data_pagamento">Data Inicial do evento:</label>
+                <input type="date" name="data_pagamento" id="data_pagamento_inicial" required placeholder="Escolha a data Inicial do seu evento!">
+                <label for="data_pagamento">Data Final do evento!</label>
+                <input type="date" name="data_pagamento" id="data_pagamento_final" required placeholder="Escolha a data Final do seu evento!">
+
+                <label for="email_pagamento">Digite seu email</label>
+                <input type="email" name="email_pagamento" id="email_pagamento" required placeholder="Digite seu email!">
+
+                <label for="qtd_pessoas_pagamento">Quantidade de Pessoas:</label>
+                <input type="number" name="qtd_pessoas_pagamento" id="qtd_pessoas_pagamento" required min="5" max="30">
+               
+                <button type="submit">Alugar e Pagar</button>
+            </form>
+
+            <div id="form_mercado_pago" style="display: none;">
+                <h2>Pagamento</h2>
+                <button id="btn_pagar">Pagar</button>
+              </div>
+              
+
+            <div class="success_message" id="success_message"></div>
+            <div class="error_message" id="error_message"></div>
+
+            <a id="btn_whatsapp_pagamento" class="btn_whatsapp_pagamento" target="_blank">Tirar dúvidas pelo WhatsApp</a>
+        </section>
+        <!--Fim html pagamentos-->
+
+        <!--html sistema de pagamentos-->
+        <!--fim sistemas de pagamentos-->
     </main>
 </body>
 </html>
 
 <script src="meuscript.js"></script>
+  

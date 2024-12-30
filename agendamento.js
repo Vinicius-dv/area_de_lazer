@@ -2,6 +2,9 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const body_parser = require('body-parser')
+const axios = require('axios')
+const mercado_Pago  = require('mercadopago')
+mercado_Pago.configurations.setAccessToken('TEST-4480189822839140-122917-65a091edb91d3062baae90a4bf6b2e37-225293277')
 const app = express()
 
 app.use(cors())
@@ -18,6 +21,13 @@ const agendamento_Schema = new mongoose.Schema({
 })
 
 const agendamento = mongoose.model('Agendamento',agendamento_Schema)
+
+const pagamento_Schema = new mongoose.Schema({
+    data_inicial: Date,
+    data_final: Date
+})
+
+const pagamento = mongoose.model('Pagamento',pagamento_Schema)
 
 app.post('/agendamento',(req,res)=>{
     const {data} = req.body
@@ -64,6 +74,64 @@ app.delete('/agendamento_delete',(req,res)=>{
         console.log('Deu errado ao deletar a data!',err)
     })
 })
+
+
+
+
+app.post('/agendamento_pagamento',(req,res)=>{
+    const data_inicial = new Date(req.body.data_inicial)
+    const data_final = new Date(req.body.data_final)
+
+    if (isNaN(data_inicial) || isNaN(data_final)) {
+        return res.status(400).json({ message: 'Datas inválidas.' });
+    }
+
+    if (data_final < data_inicial) {
+        return res.status(400).json({ message: 'A data final não pode ser anterior à data inicial.' });
+    }
+    
+    pagamento.findOne({
+        $or: [
+            { data_inicial: { $lte: data_final }, data_final: { $gte: data_inicial } },
+        ],
+    })
+    .then((data_exist)=>{
+
+        if (data_exist) {
+            return res.status(400).json({ message: 'Data já existe.'})
+        }
+        const data_agendar_pagamento = new pagamento({data_inicial,data_final})
+        data_agendar_pagamento.save()
+        .then((agendar)=>{
+            console.log('Agendamento concluido')
+            return res.status(201).json({message:'Agendamento feito com sucesso',agendar})
+        })
+        .catch((err)=>{
+            console.log('Não conseguimos concluir seu agendamento, tente novamente!',err)
+            return res.status(500).json({ message: 'Erro ao salvar agendamento.' })
+        })
+    })
+    .catch((error)=>{
+        console.log('Deu algo errado'+error)
+        return res.status(500).json({ message: 'Erro no servidor' })
+    })
+})
+
+app.post('criar_pagamento',(req,res)=>{
+    const {total,data_inicio,data_fim,email_pagamento} = req.body
+    const total_pagamento = total/2
+    const pagamento = {
+        transaction_amount:total_pagamento,
+        description:`Aluguel de ${data_inicio} até ${data_fim}`,
+        payer:{
+            email: email_pagamento
+        },
+        
+    }
+})
+
+
+
 
 const port = 3000
 app.listen(port,()=>{console.log('Rodando na porta'+port)})

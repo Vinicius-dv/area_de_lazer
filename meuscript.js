@@ -1,3 +1,5 @@
+const { Preference } = require("mercadopago")
+
 const burguer = document.getElementById('burguer')
 const ul_itens = document.querySelector('.ul_itens')
 burguer.addEventListener('click',()=>{
@@ -21,7 +23,7 @@ function moverSlide(dir){
 
     img.forEach(image => image.style.display = 'none');
 
-    img[index].style.display = 'block';
+    img[index].style.display = 'block'
 }
 
 
@@ -179,3 +181,108 @@ form_visita.addEventListener('submit',(e)=>{
     }
 
 })
+
+
+const form_pagamento = document.getElementById('form_pagamento')
+
+form_pagamento.addEventListener('submit',(e)=>{
+    e.preventDefault()
+    let data_pagamento_inicial = document.getElementById('data_pagamento_inicial').value
+    let data_pagamento_final = document.getElementById('data_pagamento_final').value
+    let qtd_pessoas = parseInt(document.getElementById('qtd_pessoas_pagamento').value)
+
+    const taxa_limpeza = 150
+
+    let preço_semana = 0
+    let final_semana = 0
+
+    if (qtd_pessoas >= 5 && qtd_pessoas <10) {
+        preço_semana = 320
+        final_semana = 420
+    } else if (qtd_pessoas >= 10 && qtd_pessoas <= 15) {
+        preço_semana = 400
+        final_semana = 500
+    } else if (qtd_pessoas > 15 && qtd_pessoas <= 20) {
+        preço_semana = 330
+        final_semana = 450
+    } else if (qtd_pessoas > 20 && qtd_pessoas <= 25) {
+        preço_semana = 250
+        final_semana = 300
+    } else if (qtd_pessoas > 25 && qtd_pessoas <= 30) {
+        preço_semana = 400
+        final_semana = 500
+    } else {
+        alert('A quantidade de pessoas deve estar entre 5 e 30.')
+        return
+    }
+
+
+    const data_inicio = new Date(data_pagamento_inicial  + 'T00:00:00')
+    const data_fim = new Date(data_pagamento_final  + 'T23:59:59')
+
+    if (data_fim < data_inicio) {
+        alert('A data final não pode ser menor que a data de início')
+        return
+    }
+
+    let valorTotal = taxa_limpeza
+
+        for (let current_data = new Date(data_inicio); current_data <= data_fim; current_data.setDate(current_data.getDate() + 1)) {
+        const tipo_dia = verificar_dia(current_data)
+
+        const valor_diaria = tipo_dia === 'finalSemana' ? final_semana : preço_semana
+        valorTotal += valor_diaria
+    }
+
+    fetch('http://localhost:3000/agendamento_pagamento',{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({data_inicial:data_pagamento_inicial,data_final:data_pagamento_final})
+    })
+    .then(res => res.json().then(dados => ({ status: res.status ,dados})))
+    .then(({ status}) => {
+        if(status ===201){
+            alert('Data agendada com sucesso')
+        }else if(status ===400){
+            alert('Data já agendada')
+        }
+    })
+    .catch((error) => {
+        console.log('Deu algo errado',error)
+    })  
+
+    const form_mercado_pago = document.getElementById('form_mercado_pago')
+    /*const btn_pagar = document.getElementById('btn_pagar')*/
+    const email_pagamento = document.getElementById('email_pagamento')
+    const valor_total = valorTotal
+
+    form_pagamento.style.display ='none'
+    form_mercado_pago.style.display ='block'
+
+    fetch('/criar_pagamento',{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({total:valor_total,data_inicio:data_inicio,data_fim:data_fim,email_pagamento:email_pagamento})
+    })
+    .then(res=>res.json())
+    .then((dados=>{
+        const mp = new MercadoPago('TEST-028d472b-5375-4974-8760-36368e2e525b',{
+            locale:'pt-BR'
+        })
+        mp.checkout({
+            preference:{
+                id:dados.preferenceID
+            }
+        })
+    }))
+    .catch(error=>{
+        alert('Erro ao criar o pagamento tente novamente'+error)
+    })
+})
+
+
+
