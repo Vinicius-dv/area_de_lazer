@@ -1,12 +1,14 @@
 {
   "dependencies": {
-    "axios": "^1.7.9",
+    "axios": "1.6.8",
     "cors": "^2.8.5",
     "mercadopago": "^2.1.1",
     "mongoose": "^8.9.2"
   },
+
   "scripts": {
     "start": "node agendamento.js"
-  }
-  
+  },
+
+  "type":"module"
 }

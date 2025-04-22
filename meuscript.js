@@ -1,4 +1,4 @@
-const { Preference } = require("mercadopago")
+
 
 const burguer = document.getElementById('burguer')
 const ul_itens = document.querySelector('.ul_itens')
@@ -78,6 +78,7 @@ function verificar_dia(data_selecionada) {
 
     const data_inicio = new Date(data_selecionada  + 'T00:00:00')
     const data_fim = new Date(data_selecionada_fim  + 'T23:59:59')
+    
 
     if (data_fim < data_inicio) {
         alert('A data final não pode ser menor que a data de início')
@@ -159,10 +160,11 @@ form_visita.addEventListener('submit',(e)=>{
                 const successMessage = document.getElementById("success_message")
                 successMessage.textContent = `${dados.message} para ${data_visita}`
                 successMessage.style.display = "block"
-                const whatsappLink = `https://api.whatsapp.com/send?phone=SEU_NUMERO&text=Olá! Gostaria de tirar dúvidas sobre o agendamento para ${data_visita}.`
+                const whatsappLink = `https://api.whatsapp.com/send?phone=16991950657&text=Olá! Gostaria de tirar dúvidas sobre o agendamento para ${data_visita}.`
                 const btnWhatsApp = document.getElementById("btn_whatsapp")
                 btnWhatsApp.href = whatsappLink
                 btnWhatsApp.style.display = "inline-block"
+                window.location.href = `https://api.whatsapp.com/send?phone=16991950657&text=Olá! Agendei uma visita para o dia ${data_visita.getDay}`
             } else if (status === 400) {
                 const successMessage = document.getElementById("success_message")
                 successMessage.style.display = "none"
@@ -226,6 +228,7 @@ form_pagamento.addEventListener('submit',(e)=>{
     }
 
     let valorTotal = taxa_limpeza
+    let email_cliente = document.getElementById('email_pagamento').value
 
         for (let current_data = new Date(data_inicio); current_data <= data_fim; current_data.setDate(current_data.getDate() + 1)) {
         const tipo_dia = verificar_dia(current_data)
@@ -239,49 +242,38 @@ form_pagamento.addEventListener('submit',(e)=>{
         headers:{
             'Content-Type':'application/json'
         },
-        body:JSON.stringify({data_inicial:data_pagamento_inicial,data_final:data_pagamento_final})
+        body:JSON.stringify({data_inicial:data_pagamento_inicial,data_final:data_pagamento_final,email_cliente:email_cliente})
     })
-    .then(res => res.json().then(dados => ({ status: res.status ,dados})))
-    .then(({ status}) => {
-        if(status ===201){
-            alert('Data agendada com sucesso')
-        }else if(status ===400){
-            alert('Data já agendada')
-        }
-    })
-    .catch((error) => {
-        console.log('Deu algo errado',error)
-    })  
-
-    const form_mercado_pago = document.getElementById('form_mercado_pago')
-    const btn_pagar = document.getElementById('btn_pagar')
-    const email_pagamento = document.getElementById('email_pagamento')
-    const valor_total = valorTotal
-
-    form_pagamento.style.display ='none'
-    form_mercado_pago.style.display ='block'
-
-    fetch('/criar_pagamento',{
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({total:valor_total,data_inicio:data_inicio,data_fim:data_fim,email_pagamento:email_pagamento})
-    })
-    .then(res=>res.json())
-    .then((dados=>{
-        const mp = new MercadoPago('TEST-028d472b-5375-4974-8760-36368e2e525b',{
-            locale:'pt-BR'
-        })
-        mp.checkout({
-            preference:{
-                id:dados.preferenceID
+    .then(res => res.json().then(dados => ({ status: res.status, dados })))
+        .then(({ status, dados }) => {
+            if (status === 201) {
+                const errorMessage = document.getElementById("error_message_pagamento")
+                errorMessage.style.display = "none"
+                const successMessage = document.getElementById("success_message_pagamento")
+                successMessage.textContent = `${dados.message} para ${data_pagamento_inicial}`
+                successMessage.style.display = "block"
+                const whatsappLink = `https://api.whatsapp.com/send?phone=16991950657&text=Olá! https://api.whatsapp.com/send?phone=16991950657&text=Olá!  Gostaria de realizar o pagamento do meu aluguel do dia ${data_pagamento_inicial} até ${data_pagamento_final} no valor de ${valorTotal}`
+                const btnWhatsApp = document.getElementById("btn_whatsapp_pagamento")
+                btnWhatsApp.href = whatsappLink
+                btnWhatsApp.style.display = "inline-block"
+            } else if (status === 400) {
+                const successMessage = document.getElementById("success_message_pagamento")
+                successMessage.style.display = "none"
+                const errorMessage = document.getElementById("error_message_pagamento")
+                errorMessage.textContent = `Erro: ${dados.message}`
+                errorMessage.style.display = "block"
             }
         })
-    }))
-    .catch(error=>{
-        alert('Erro ao criar o pagamento tente novamente'+error)
-    })
+        .catch(() => {
+            const successMessage = document.getElementById("success_message_pagamento")
+            successMessage.style.display = "none"
+            const errorMessage = document.getElementById("error_message_pagamento")
+            errorMessage.textContent = "Erro inesperado. Tente novamente mais tarde."
+            errorMessage.style.display = "block"
+        })
+
+
+
 })
 
 
